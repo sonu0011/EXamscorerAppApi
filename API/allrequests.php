@@ -114,8 +114,20 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
 		//ppt and pdf details
 		if (isset($_POST['pdf_pdf_details'])) {
 
-			$res = $con->ppt_and_pdf($_POST['cat_id'],$_POST['subcat_id']);
+			$res = $con->ppt_and_pdf($_POST['cat_id']);
 			echo $res;
+		}
+		//images details
+		if (isset($_POST['images_details'])) {
+			$res = $con->images_details($_POST['cat_id'],$_POST['subcat_id']);
+			echo $res;
+			
+		}
+		//feedback message
+		if (isset($_POST['feedback_details'])) {
+			$res = $con->feedback_message($_POST['email_address'],$_POST['message']);
+			echo $res;
+			
 		}
 	
 }

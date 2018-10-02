@@ -42,7 +42,7 @@ class DbOperation{
 					while ($row =mysqli_fetch_assoc($result)) {
 					    $temp = array();
 					       $temp['branch_id'] =$row['branch_id'];
-					        $temp['branch_image'] ="http://192.168.43.126/ExamscorerApp/".$row['branch_image'];
+					        $temp['branch_image'] ="http://192.168.44.178/ExamscorerApp/".$row['branch_image'];
 					        $temp['branch_heading'] =$row['branch_heading'];
 					  
 					    array_push($products, $temp);
@@ -62,7 +62,7 @@ class DbOperation{
 					    $temp = array();
 					       $temp['sem_id'] =$row['sem_id'];
 					          $temp['sem_title'] =$row['sem_title'];
-					        $temp['sem_image'] ="http://192.168.43.126/ExamscorerApp/".$row['sem_images'];
+					        $temp['sem_image'] ="http://192.168.44.178/ExamscorerApp/".$row['sem_images'];
 					  
 					    array_push($products, $temp);
 
@@ -261,7 +261,7 @@ function fetch_profile($user_id){
 	 					$temp = array();
 	 					$temp['user_email'] =$row['user_email'];
 	 					$temp['user_name'] =$row['user_name'];
-	 					$temp['user_profile_pic'] ="http://192.168.43.126/ExamscorerApp/API/Uploads/".$row['user_image'];
+	 					$temp['user_profile_pic'] ="http://192.168.44.178/ExamscorerApp/API/Uploads/".$row['user_image'];
 	 					array_push($products, $temp);
 
 	 		    
@@ -340,7 +340,7 @@ function notes_cat(){
 					while ($row =mysqli_fetch_assoc($result)) {
 					    $temp = array();
 					       $temp['notes_cat_id'] =$row['notes_cat_id'];
-					          $temp['notes_cat_image'] ="http://192.168.43.126/ExamscorerApp/Notes_Cat_Image/".$row['notes_cat_image'];
+					          $temp['notes_cat_image'] ="http://192.168.44.178/ExamscorerApp/Notes_Cat_Image/".$row['notes_cat_image'];
 					          $temp['notes_cat_title'] =$row['notes_cat_title'];
 					        
 					  
@@ -362,7 +362,7 @@ function notes_subcat($notes_id){
 					    $temp = array();
 					       $temp['notes_sub_id'] =$row['notes_sub_id'];
 					       $temp['notes_catid'] =$row['notes_catid'];
-					          $temp['notes_subcat_image'] ="http://192.168.43.126/ExamscorerApp/Notes_Subcat_Image/".$row['notes_subcat_image'];
+					          $temp['notes_subcat_image'] ="http://192.168.44.178/ExamscorerApp/Notes_Subcat_Image/".$row['notes_subcat_image'];
 					          $temp['notes_subcat_title'] =$row['notes_sub_cat_title'];
 					        
 					  
@@ -375,20 +375,18 @@ function notes_subcat($notes_id){
 
 }
 
-function ppt_and_pdf($cat_id,$subcat_id){
+function ppt_and_pdf($cat_id){
 
 			$products = array(); 
 
-	$sql ="select * from notes where notes_cat_id = '$cat_id'  && notes_subcat_id = '$subcat_id'";
+	$sql ="select * from notes where notes_cat_id = '$cat_id'";
 					$result = mysqli_query($this->con,$sql);
 					if ($result) {
 					while ($row =mysqli_fetch_assoc($result)) {
 					    $temp = array();
-					       $temp['notes_sub_id'] =$row['notes_sub_id'];
-					       $temp['notes_catid'] =$row['notes_catid'];
-					          $temp['notes_subcat_image'] ="http://192.168.43.126/ExamscorerApp/Notes_Subcat_Image/".$row['notes_subcat_image'];
-					          $temp['notes_subcat_title'] =$row['notes_sub_cat_title'];
-					        
+					       
+					          $temp['notes_download_link'] ="http://192.168.44.178/ExamscorerApp/PDF_PPT/".$row['notes_download_link'];
+					        $temp['notes_download_title'] =$row['notes_download_title'];
 					  
 					    array_push($products, $temp);
 
@@ -396,6 +394,42 @@ function ppt_and_pdf($cat_id,$subcat_id){
 					echo json_encode($products);
 		
 				}
+
+}
+
+function images_details($cat_id,$subcat_id){
+
+			$products = array(); 
+			$a ="http://192.168.44.178/ExamscorerApp/Notes_Images/";
+			if ($subcat_id ==2) {
+
+				$a =$a."computer_graphics/";
+			}
+
+	$sql ="select * from notes where notes_cat_id = '$cat_id' && notes_subcat_id = '$subcat_id'";
+					$result = mysqli_query($this->con,$sql);
+					if ($result) {
+					while ($row =mysqli_fetch_assoc($result)) {
+					    $temp = array();
+					       
+					          $temp['notes_download_link'] =$a.$row['notes_download_link'];	
+					          $temp['notes_download_title'] =$row['notes_download_link'];				  
+					    array_push($products, $temp);
+
+					}
+					echo json_encode($products);
+		
+				}
+
+}
+function feedback_message($email,$message){
+	$sql ="INSERT INTO feeddback_form(feedback_email,feedback_message) VALUES ('$email','$message')";
+	 $result = mysqli_query($this->con,$sql);
+					if ($result) {
+						echo '1';
+					}
+				
+
 
 }
 }
