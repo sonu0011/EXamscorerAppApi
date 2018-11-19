@@ -10,7 +10,7 @@ class Dbconnect{
 	}
 	function returnobject(){
 		try {
-				$this->con =mysqli_connect("localhost","root","","Examscorer");
+				$this->con =mysqli_connect("localhost","root","","id4802087_examscorer");
 				return $this->con;
 			}
 				

@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
 		}
 		//papers details
 		if (isset($_POST['papers_details'])) {
-			$res = $con->papers_details($_POST['sub_code']);
+			$res = $con->papers_details($_POST['sub_code'],$_POST['branch_title']);
 			echo $res;
 			
 		}
@@ -129,6 +129,26 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
 			echo $res;
 			
 		}
+		//cse3rdsem
+		//intro details
+		if (isset($_POST['intro_details'])) {
+			$res =$con->intro_details();
+			echo $res;
+			
+		}
+		//papers details_year wise
+		if (isset($_POST['papers_details_year'])) {
+
+			$res =$con->papers_details_year($_POST['sub_code'],$_POST['year'],$_POST['branch_name']);
+			echo $res;
+		}
+		//all urls
+		if (isset($_POST['AllUrls'])) {
+
+				$res =$con->AllUrls();
+			echo $res;
+		}
+		
 	
 }
 
